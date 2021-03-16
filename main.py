@@ -29,9 +29,12 @@ def Piglatinize(text):
 def home():
     # When you said 'clickable link' I took that to mean presenting the piglatinized fact and
     # linking that back to the piglatinizer, so that's what this is doing.
-    return render_template_string('<a href="{}">{}</a>'.format(
-        *Piglatinize(GetFact())
-    ))
+    try:
+        return render_template_string('<a href="{}">{}</a>'.format(
+            *Piglatinize(GetFact())
+        ))
+    except Exception:
+        return render_template_string('Failed to Piglatinize a random fact!')
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
