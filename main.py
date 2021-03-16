@@ -9,14 +9,15 @@ import requests
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
+def GetFact():
     html = requests.get('http://unkno.com/')
     parser = BeautifulSoup(html.content, 'html.parser')
 
-    fact = parser.find('div', id='content').getText().strip()
+    return parser.find('div', id='content').getText().strip()
 
-    return render_template_string(fact)
+@app.route('/')
+def home():
+    return render_template_string(GetFact())
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
